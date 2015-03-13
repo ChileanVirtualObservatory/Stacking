@@ -14,9 +14,20 @@ def stacking(outputDir,maxSize):
 	dir_png = outputDir+'/PNG_Images'	
 
 	newdata = np.zeros((maxSize[0],maxSize[1]))
+	datasum = np.zeros((maxSize[0],maxSize[1]))
 
-	for i in xrange(0,len(data)):
-		newdata += fits.getdata(data[i])/len(data)
+	for x in xrange(0,len(data)):
+		img = fits.getdata(data[x])
+		for i in xrange(0,len(img)):
+			for j in xrange(0,len(img[i])):
+				newdata[i][j] += img[i][j]
+				if newdata[i][j] > 0:
+					datasum[i][j] += 1 
+
+	for i in xrange(0,len(newdata)):
+		for j in xrange(0,len(newdata[0])):
+				if datasum[i][j] != 0:
+					newdata[i][j] /= datasum[i][j]
 
 	fits.writeto(outputDir+'/Img_5.fits', newdata, clobber=True)
 	j_img = pyfits.getdata(outputDir+'/Img_5.fits')

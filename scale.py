@@ -61,15 +61,3 @@ def scale(outputDir, maxSize):
 
     return (nmh,nmw)
 
-def transformData(data,x1,x2,y1,y2):
-
-    newdata = data
-    newdata = data*(y2-y1)/(x2-x1) + (y1(x2-x1) - x1(y2-y1))/(x2-x1)
-    # w ,h = data.shape
-    # for i in xrange(0,w):
-    #     for j in xrange(0,h):
-
-    #         newdata[i][j] =  data[i][j]*(y2-y1)/(x2-x1) + (y1(x2-x1) - x1(y2-y1))/(x2-x1)
-            
-    return newdata
-

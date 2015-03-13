@@ -10,6 +10,23 @@ import numpy as np
 import pylab as py
 import img_scale
 
+
+def normalizeAux(x,x1,x2,y1,y2):
+
+    y = ( (x-x1)*(y2-y1)/(x2-x1) ) + y1
+            
+    return y
+
+def normalize(data):
+	maxv = data.max()
+	minv = data.min()
+	height, width = data.shape
+	for i in xrange(0,height):
+		for j in xrange(0,width):
+			data[i][j] = normalizeAux(data[i][j], 100.0, 0.0, maxv, minv)
+
+	return data
+
 def cropAux (originalData):
 
 	height = len(originalData)
@@ -140,6 +157,8 @@ def cropAux (originalData):
 			border.append(line[0])
 		if len(line) > 1:
 			border.append(line[-1])
+
+	newdata = normalize(newdata)
 
 	return border, newdata
 
