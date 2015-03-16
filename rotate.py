@@ -59,10 +59,11 @@ def fartestPoints(border):
 	return points
 
 def theta(points):
+	print points
 	y1,x1 = points[0]
 	y2,x2 = points[1]
 	theta = (y2-y1+.0)/(x2-x1+.0)
-	theta = math.atan(theta)
+	theta = math.atan(theta+(math.pi*9)/2)
 	return theta
 
 def rotate(outputDir, border):

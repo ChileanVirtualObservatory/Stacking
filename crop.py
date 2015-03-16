@@ -138,29 +138,57 @@ def cropAux (originalData):
 				if j > maxx:
 					maxx = j
 
-	newHeight = maxy - miny
-	newWidth = maxx - minx
+	originalData = originalData[miny:maxy, minx:maxx]
+	newHeight, newWidth = originalData.shape
 
-	newdata = np.ndarray(shape=(newHeight+1,newWidth+1), dtype=float)
+	for i in xrange(0,newHeight):
+		for j in xrange(0,newWidth):
+			if originalData[i,j] > 0 and i == 0 and j == 0 and originalData[i+1,j] == 0 and originalData[i,j+1] == 0 and originalData[i+1,j+1] == 0:
+				originalData[i,j] = 0
+			elif originalData[i,j] > 0 and i == (newHeight-1) and j == (newWidth-1) and originalData[i-1,j] == 0 and originalData[i,j-1] == 0 and originalData[i-1,j-1] == 0:
+				originalData[i,j] = 0
+			elif originalData[i,j] > 0 and i == 0 and j == (newWidth-1) and originalData[i+1,j] == 0 and originalData[i,j-1] == 0 and originalData[i+1,j-1] == 0:
+				originalData[i,j] = 0
+			elif originalData[i,j] > 0 and i == (newHeight-1) and j == 0 and originalData[i-1,j] == 0 and originalData[i,j+1] == 0 and originalData[i-1,j+1] == 0:
+				originalData[i,j] = 0
+			elif originalData[i,j] > 0 and i == (newHeight-1) and j > 0 and j < (newWidth-1) and originalData[i-1,j] == 0 and originalData[i,j+1] == 0 and originalData[i,j-1] == 0 and originalData[i-1,j+1] == 0 and originalData[i-1,j-1] == 0:
+				originalData[i,j] = 0
+			elif originalData[i,j] > 0 and i < (newHeight-1) and i > 0 and j == 0 and originalData[i-1,j] == 0 and originalData[i-1,j+1] == 0 and originalData[i,j+1] == 0 and originalData[i+1,j+1] == 0 and originalData[i+1,j] == 0:
+				originalData[i,j] = 0
+			elif originalData[i,j] > 0 and i == 0 and j > 0 and j < (newWidth-1) and originalData[i,j-1] == 0 and originalData[i,j+1] == 0 and originalData[i+1,j+1] == 0 and originalData[i+1,j] == 0 and originalData[i+1,j-1] == 0:
+				originalData[i,j] = 0
+			elif originalData[i,j] > 0 and i > 0 and i < (newHeight-1) and j == (newWidth-1) and originalData[i+1,j] == 0 and originalData[i+1,j-1] == 0 and originalData[i,j-1] == 0 and originalData[i-1,j-1] == 0 and originalData[i-1,j] == 0:
+				originalData[i,j] = 0
+			elif originalData[i,j] > 0 and i > 0 and i < (newHeight-1) and j < (newWidth-1) and j > 0 and originalData[i+1,j] == 0 and originalData[i+1,j-1] == 0 and originalData[i,j-1] == 0 and originalData[i-1,j-1] == 0 and originalData[i-1,j] == 0 and originalData[i-1,j+1] == 0 and originalData[i,j+1] == 0 and originalData[i+1,j+1] == 0:
+				originalData[i,j] = 0
+			elif originalData[i,j] > 0:
+				if i < miny:
+					miny = i
+				if i > maxy:
+					maxy = i
+				if j < minx:
+					minx = j
+				if j > maxx:
+					maxx = j
+	
+	newData = originalData[miny:maxy, minx:maxx]
+	newHeight, newWidth = newData.shape
 
 	border = []
-	for i in xrange(miny,maxy+1): 
+	for i in xrange(0,newHeight): 
 		line = []
-		for j in xrange(minx,maxx+1):
-			if data[i,j] <= 0:
-				newdata[i-miny, j-minx] = 0
-			else:
-				newdata[i-miny, j-minx] = originalData[i,j]
-				line.append((i-miny, j-minx))
+		for j in xrange(0,newWidth):
+			if newData[i,j] > 0:
+				line.append((i,j))
 
 		if len(line) > 0:
 			border.append(line[0])
 		if len(line) > 1:
 			border.append(line[-1])
 
-	newdata = normalize(newdata)
+	newData = normalize(newData)
 
-	return border, newdata
+	return border, newData
 
 def crop(inputDir, outputDir):
 	data = glob.glob(inputDir+'/*.fits')
