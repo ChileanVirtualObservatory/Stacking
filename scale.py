@@ -13,7 +13,8 @@ def scale_aux(image, maxSize):
 
     h, w = image.shape
     r = float(maxSize[1])/float(w)     
-
+    aux =0
+    r2 =int(round(r))
     if (r == 1):
         return h, w, image
 
@@ -23,8 +24,7 @@ def scale_aux(image, maxSize):
 
         for i in range(0,h):
             for j in range(0,w):
-
-                image_final[round(r*i)][round(r*j)] = image[i][j]
+                    image_final[i][j] = image[i][j]
     
     return round(r*h), round(r*w), image_final
 
@@ -50,8 +50,8 @@ def scale(outputDir, maxSize):
         py.imshow(img, aspect='equal')
         py.title('Scale Img_3_'+str(i))
         py.savefig(dir_png+'/Img_3_'+str(i)+'.png')
-        img = Image.open(dir_png+'/Img_3_'+str(i)+'.png')
-        img.show()
+        # img = Image.open(dir_png+'/Img_3_'+str(i)+'.png')
+        # img.show()
         print "Done."
 
         if h > nmh:

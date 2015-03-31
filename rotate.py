@@ -80,15 +80,15 @@ def rotate(outputDir, border):
 
 		fits.writeto(outputDir+'/Img_2_'+str(i)+'.fits',image, clobber=True)
 
-		j_img = pyfits.getdata(outputDir+'/Img_2_'+str(i)+'.fits')
-		img = np.zeros((j_img.shape[0], j_img.shape[1]), dtype=float)
-		img[:,:] = img_scale.sqrt(j_img, scale_min=0, scale_max=10000)
-		py.clf()
-		py.imshow(img, aspect='equal')
-		py.title('Rotate Img_2_'+str(i))
-		py.savefig(dir_png+'/Img_2_'+str(i)+'.png')
-		img = Image.open(dir_png+'/Img_2_'+str(i)+'.png')
-		img.show()
+		# j_img = pyfits.getdata(outputDir+'/Img_2_'+str(i)+'.fits')
+		# img = np.zeros((j_img.shape[0], j_img.shape[1]), dtype=float)
+		# img[:,:] = img_scale.sqrt(j_img, scale_min=0, scale_max=10000)
+		# py.clf()
+		# py.imshow(img, aspect='equal')
+		# py.title('Rotate Img_2_'+str(i))
+		# py.savefig(dir_png+'/Img_2_'+str(i)+'.png')
+		# img = Image.open(dir_png+'/Img_2_'+str(i)+'.png')
+		# img.show()
 		
 		print "Done."
 
@@ -99,3 +99,27 @@ def rotate(outputDir, border):
 			maxWidth = w
 
 	return (maxHeight,maxWidth)
+
+def rotateManual(outputDir):
+
+	data = sorted(glob.glob(outputDir+'/Img_1_*.fits'))
+	# dir_png = outputDir+'/PNG_Images' 
+	for i in xrange(0,len(data)):
+		image = fits.getdata(data[i])
+		image = rotate_image(image,math.atan(theta+(math.pi*9)/2))
+
+		print "Rotate: "+'/Img_1_'+str(i)+'.fits',
+
+		fits.writeto(outputDir+'/Img_2_'+str(i)+'.fits',image, clobber=True)
+
+		# j_img = pyfits.getdata(outputDir+'/Img_2_'+str(i)+'.fits')
+		# img = np.zeros((j_img.shape[0], j_img.shape[1]), dtype=float)
+		# img[:,:] = img_scale.sqrt(j_img, scale_min=0, scale_max=10000)
+		# py.clf()
+		# py.imshow(img, aspect='equal')
+		# py.title('Rotate Img_2_'+str(i))
+		# py.savefig(dir_png+'/Img_2_'+str(i)+'.png')
+		# img = Image.open(dir_png+'/Img_2_'+str(i)+'.png')
+		# img.show()
+		
+		print "Done."

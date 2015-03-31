@@ -190,6 +190,26 @@ def cropAux (originalData):
 
 	return border, newData
 
+def minValue(data):
+
+	x,y = data.shape
+	minvalue = -99999999 
+	for i in xrange(0,x):
+		for j in xrange(0,y):
+			if data[i][j] < minvalue:
+				minvalue = data[i][j]
+	return minvalue
+
+def manualCrop(data,E1,E2,E3,E4):
+
+	h,w = data.shape
+	newdata = data
+	for i in range(E3,E4):
+		for j in range(E1,E2):
+				newdata[i,j] = data[i,j]
+	return newdata
+
+
 def crop(inputDir, outputDir):
 	data = glob.glob(inputDir+'/*.fits')
 	borders = []
@@ -206,21 +226,44 @@ def crop(inputDir, outputDir):
 
 		print "Crop: "+'/Img_0_'+str(i)+'.fits'
 
-		fits.writeto(outputDir+'/Img_0_'+str(i)+'.fits',image, clobber=True)
+		fits.writeto(outputDir+'/Img_0_'+str(i)+'.fits',image, clobber=True)	
 		border, image = cropAux(image)
 		fits.writeto(outputDir+'/Img_1_'+str(i)+'.fits',image, clobber=True)
 		borders.append(border)
 		# - - - - - -  CREA Y GUARDA LAS FOTOS PNG EN EL SUBDIRECTORIO - - - - - - 
-		j_img = pyfits.getdata(outputDir+'/Img_1_'+str(i)+'.fits')
-		img = np.zeros((j_img.shape[0], j_img.shape[1]), dtype=float)
-		img[:,:] = img_scale.sqrt(j_img, scale_min=0, scale_max=10000)
-		py.clf()
-		py.imshow(img, aspect='equal')
-		py.title('Crop Img_1_'+str(i))
-		py.savefig(dir_png+'/Img_1_'+str(i)+'.png')
-		img = Image.open(dir_png+'/Img_1_'+str(i)+'.png')
-		img.show()
+		# j_img = pyfits.getdata(outputDir+'/Img_1_'+str(i)+'.fits')
+		# img = np.zeros((j_img.shape[0], j_img.shape[1]), dtype=float)
+		# img[:,:] = img_scale.sqrt(j_img, scale_min=0, scale_max=10000)
+		# py.clf()
+		# py.imshow(img, aspect='equal')
+		# py.title('Crop Img_1_'+str(i))
+		# py.savefig(dir_png+'/Img_1_'+str(i)+'.png')
+		# img = Image.open(dir_png+'/Img_1_'+str(i)+'.png')
+		# img.show()
 
 	print "Done."
 	return borders
+
+def cropManual(inputDir, outputDir,E1,E2,E3,E4):
+	data = glob.glob(inputDir+'/*.fits')
+	borders = []
+	# - - - - - -  CREA EL SUBDIRECTORIO PARA GUARDAR LAS FOTOS PNG - - - - - - 
+	dir_png = outputDir+'/PNG_Images' 
+	if not os.path.isdir(dir_png):
+		os.makedirs(dir_png)
+	for i in xrange(0,len(data)):
+
+		name = data[i].split('/')[-1].split('.')[0]
+		image = fits.getdata(data[i])
+		if isinstance(image, list):
+			image = image[0]
+
+		print "Crop: "+'/Img_0_'+str(i)+'.fits'
+
+		fits.writeto(outputDir+'/Img_0_'+str(i)+'.fits',image, clobber=True)	
+		manualCrop(image,E1,E2,E3,E4)
+		fits.writeto(outputDir+'/Img_1_'+str(i)+'.fits',image, clobber=True)
+
+	print "Done."
+
 

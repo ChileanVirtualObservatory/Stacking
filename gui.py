@@ -13,14 +13,18 @@ class GUI(Frame):
 
         inputDir = ""
         outputDir = ""
-         
+        self.nuevo = Frame(self, relief=RAISED,borderwidth=1)
+        self.E1 = Entry(self.nuevo, width=5)
+        self.E2 = Entry(self.nuevo, width=5)
+        self.E3 = Entry(self.nuevo, width=5)
+        self.E4 = Entry(self.nuevo, width=5)
+        self.visible = False
         self.parent = parent
-        
         self.initUI()
         
     def initUI(self):
                   
-      
+        
         self.parent.title("Stacking V0.1b")
         self.style = Style()
         self.style.theme_use("default")
@@ -29,8 +33,9 @@ class GUI(Frame):
         iFrame.pack(fill=BOTH, expand=1)
         oFrame = Frame(self, relief=RAISED, borderwidth=1)
         oFrame.pack(fill=BOTH, expand=1)
-        
-        self.pack(fill=BOTH, expand=1)
+
+        self.pack(fill=BOTH, expand=1)      
+
 
         inputLabel = Label(iFrame, text="Input Directory:")
         inputLabel.pack(side=LEFT, padx=10)
@@ -50,8 +55,43 @@ class GUI(Frame):
 
         closeButton = Button(self, text="Exit", command=self.close)
         closeButton.pack(side=RIGHT, padx=5)
-        okButton = Button(self, text="Stack!", command=lambda:mn.stack(self.inputDir, self.outputDir))
+        okButton = Button(self, text="Stack!", command=lambda:mn.stack(self.inputDir, self.outputDir,self.E1.get(),\
+            self.E2.get(),self.E3.get(),self.E4.get()))
         okButton.pack(side=RIGHT)
+
+        manualValues = Button(self, text = "Manual")
+        manualValues.bind('<Button-1>', self.hideShow)
+        manualValues.pack(side=RIGHT)
+        
+
+
+    def checkUncheck(self):
+        print "variable is {0}".format(self.checked.get())
+
+    def hideShow(self,event):
+        if self.visible:
+            self.nuevo.destroy()
+            self.visible = False
+        else:
+            self.visible = True 
+            self.nuevo = Frame(self.parent, relief=RAISED,borderwidth=1)
+            self.nuevo.pack(fill=BOTH, expand=1)
+            x1 = Label(self.nuevo, text="x1")
+            x1.pack( side = LEFT,padx=20)
+            self.E1 = Entry(self.nuevo, width=5)
+            self.E1.pack(side = LEFT,padx=20)
+            x2 = Label(self.nuevo, text="x2")
+            x2.pack( side = LEFT,padx=20)
+            self.E2 = Entry(self.nuevo, width=5)
+            self.E2.pack(side = LEFT,padx=20)
+            y1 = Label(self.nuevo, text="y1")
+            y1.pack( side = LEFT,padx=20)
+            self.E3 = Entry(self.nuevo, width=5)
+            self.E3.pack(side = LEFT,padx=20)
+            y2 = Label(self.nuevo, text="y2")
+            y2.pack( side = LEFT,padx=20)
+            self.E4 = Entry(self.nuevo, width=5)
+            self.E4.pack(side = LEFT,padx=20)    
 
     def chooseDir(self,entry,inout):
         dirname = tkFileDialog.askdirectory(parent=self,initialdir=".",title='Please select a directory')

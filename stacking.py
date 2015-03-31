@@ -24,21 +24,57 @@ def stacking(outputDir,maxSize):
 				if newdata[i][j] > 0:
 					datasum[i][j] += 1 
 
-	for i in xrange(0,len(newdata)):
-		for j in xrange(0,len(newdata[0])):
-				if datasum[i][j] != 0:
-					newdata[i][j] /= datasum[i][j]
+	# for i in xrange(0,len(newdata)):
+	# 	for j in xrange(0,len(newdata[0])):
+	# 			if datasum[i][j] != 0:
+	# 				newdata[i][j] /= datasum[i][j]
 
 	fits.writeto(outputDir+'/Img_5.fits', newdata, clobber=True)
-	j_img = pyfits.getdata(outputDir+'/Img_5.fits')
-	img = np.zeros((j_img.shape[0], j_img.shape[1]), dtype=float)
-	img[:,:] = img_scale.sqrt(j_img, scale_min=0, scale_max=10000)
-	py.clf()
-	py.imshow(img, aspect='equal')
-	py.title('Stack Img_5')
-	py.savefig(dir_png+'/Img_5.png')
-	img = Image.open(dir_png+'/Img_5.png')
-	img.show()
+	# j_img = pyfits.getdata(outputDir+'/Img_5.fits')
+	# img = np.zeros((j_img.shape[0], j_img.shape[1]), dtype=float)
+	# img[:,:] = img_scale.sqrt(j_img, scale_min=0, scale_max=10000)
+	# py.clf()
+	# py.imshow(img, aspect='equal')
+	# py.title('Stack Img_5')
+	# py.savefig(dir_png+'/Img_5.png')
+	# img = Image.open(dir_png+'/Img_5.png')
+	# img.show()
+
+
+	print "Stack: Done."	
+
+def stackingManual(outputDir):
+
+	data = sorted(glob.glob(outputDir+'/Img_4_*.fits'))
+	# dir_png = outputDir+'/PNG_Images'	
+	img = fits.getdata(data[0])
+	h,w = img.shape
+	newdata = np.zeros((h,w))
+	datasum = np.zeros((h,w))
+
+	for x in xrange(0,len(data)):
+		img = fits.getdata(data[x])
+		for i in xrange(0,len(img)):
+			for j in xrange(0,len(img[i])):
+				newdata[i][j] += img[i][j]
+				if newdata[i][j] > 0:
+					datasum[i][j] += 1 
+
+	# for i in xrange(0,len(newdata)):
+	# 	for j in xrange(0,len(newdata[0])):
+	# 			if datasum[i][j] != 0:
+	# 				newdata[i][j] /= datasum[i][j]
+
+	fits.writeto(outputDir+'/Img_5.fits', newdata, clobber=True)
+	# j_img = pyfits.getdata(outputDir+'/Img_5.fits')
+	# img = np.zeros((j_img.shape[0], j_img.shape[1]), dtype=float)
+	# img[:,:] = img_scale.sqrt(j_img, scale_min=0, scale_max=10000)
+	# py.clf()
+	# py.imshow(img, aspect='equal')
+	# py.title('Stack Img_5')
+	# py.savefig(dir_png+'/Img_5.png')
+	# img = Image.open(dir_png+'/Img_5.png')
+	# img.show()
 
 
 	print "Stack: Done."	
