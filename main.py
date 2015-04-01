@@ -21,15 +21,15 @@ def stack(inputDir,outputDir,E1,E2,E3,E4):
 				os.unlink(file_path)
 		except Exception, e:
 			print e
-	if (E1 || E2 || E3 || E4) == null:
+	if (E1 or E2 or E3 or E4) == None:
 		border = cr.crop(inputDir, outputDir)
 		maxSize = rt.rotate(outputDir, border)
 		maxSize = sc.scale(outputDir, maxSize)
 		al.align(outputDir, maxSize)
 		st.stacking(outputDir, maxSize)
-	elif(E1 and E2 and E3 and E4) != null:
+	elif(E1 and E2 and E3 and E4) != None:
 		cr.cropManual(inputDir,outputDir,E1,E2,E3,E4)
-		rt.rotateManual(outputDir)
+		st.stackingManual(outputDir)
 
 def aux(inputDir,outputDir):
 	data = glob.glob(inputDir+'/*.fits')

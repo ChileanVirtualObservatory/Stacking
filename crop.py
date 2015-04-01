@@ -202,11 +202,9 @@ def minValue(data):
 
 def manualCrop(data,E1,E2,E3,E4):
 
-	h,w = data.shape
-	newdata = data
-	for i in range(E3,E4):
-		for j in range(E1,E2):
-				newdata[i,j] = data[i,j]
+	print data
+	newdata = data[int(E3):int(E4), int(E1):int(E2)]
+	print newdata
 	return newdata
 
 
@@ -261,7 +259,7 @@ def cropManual(inputDir, outputDir,E1,E2,E3,E4):
 		print "Crop: "+'/Img_0_'+str(i)+'.fits'
 
 		fits.writeto(outputDir+'/Img_0_'+str(i)+'.fits',image, clobber=True)	
-		manualCrop(image,E1,E2,E3,E4)
+		image = manualCrop(image,E1,E2,E3,E4)
 		fits.writeto(outputDir+'/Img_1_'+str(i)+'.fits',image, clobber=True)
 
 	print "Done."

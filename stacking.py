@@ -45,7 +45,7 @@ def stacking(outputDir,maxSize):
 
 def stackingManual(outputDir):
 
-	data = sorted(glob.glob(outputDir+'/Img_4_*.fits'))
+	data = sorted(glob.glob(outputDir+'/Img_1_*.fits'))
 	# dir_png = outputDir+'/PNG_Images'	
 	img = fits.getdata(data[0])
 	h,w = img.shape
@@ -65,7 +65,7 @@ def stackingManual(outputDir):
 	# 			if datasum[i][j] != 0:
 	# 				newdata[i][j] /= datasum[i][j]
 
-	fits.writeto(outputDir+'/Img_5.fits', newdata, clobber=True)
+	fits.writeto(outputDir+'/Img_2.fits', newdata, clobber=True)
 	# j_img = pyfits.getdata(outputDir+'/Img_5.fits')
 	# img = np.zeros((j_img.shape[0], j_img.shape[1]), dtype=float)
 	# img[:,:] = img_scale.sqrt(j_img, scale_min=0, scale_max=10000)
