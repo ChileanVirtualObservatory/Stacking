@@ -39,16 +39,16 @@ def stacking(outputDir,maxSize):
 	newdata = np.zeros((maxSize[0],maxSize[1]))
 	datasum = np.zeros((maxSize[0],maxSize[1]))
 
-	for x in xrange(0,len(data)):
+	for x in range(0,len(data)):
 		img = fits.getdata(data[x])
-		for i in xrange(0,len(img)):
-			for j in xrange(0,len(img[i])):
+		for i in range(0,len(img)):
+			for j in range(0,len(img[i])):
 				newdata[i][j] += img[i][j]
 				if newdata[i][j] > 0:
 					datasum[i][j] += 1 
 
-	# for i in xrange(0,len(newdata)):
-	# 	for j in xrange(0,len(newdata[0])):
+	# for i in range(0,len(newdata)):
+	# 	for j in range(0,len(newdata[0])):
 	# 			if datasum[i][j] != 0:
 	# 				newdata[i][j] /= datasum[i][j]
 
@@ -64,7 +64,7 @@ def stacking(outputDir,maxSize):
 	# img.show()
 
 
-	print "Stack: Done."	
+	print("Stack: Done."	)
 
 def stackingManual(outputDir):
 
@@ -75,16 +75,16 @@ def stackingManual(outputDir):
 	newdata = np.zeros((h,w))
 	datasum = np.zeros((h,w))
 
-	for x in xrange(0,len(data)):
+	for x in range(0,len(data)):
 		img = fits.getdata(data[x])
-		for i in xrange(0,len(img)):
-			for j in xrange(0,len(img[i])):
+		for i in range(0,len(img)):
+			for j in range(0,len(img[i])):
 				newdata[i][j] += img[i][j]
 				if newdata[i][j] > 0:
 					datasum[i][j] += 1 
 
-	# for i in xrange(0,len(newdata)):
-	# 	for j in xrange(0,len(newdata[0])):
+	# for i in range(0,len(newdata)):
+	# 	for j in range(0,len(newdata[0])):
 	# 			if datasum[i][j] != 0:
 	# 				newdata[i][j] /= datasum[i][j]
 
@@ -100,4 +100,4 @@ def stackingManual(outputDir):
 	# img.show()
 
 
-	print "Stack: Done."	
+	print("Stack: Done."	)

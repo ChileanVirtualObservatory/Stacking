@@ -11,12 +11,12 @@
 # modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -114,11 +114,11 @@ def linear(inputArray, scale_min=None, scale_max=None):
 	@param scale_max: maximum data value
 	@rtype: numpy array
 	@return: image data array
-	
-	"""		
-	print "img_scale : linear"
+
+	"""
+	print("img_scale : linear")
 	imageData=numpy.array(inputArray, copy=True)
-	
+
 	if scale_min == None:
 		scale_min = imageData.min()
 	if scale_max == None:
@@ -130,7 +130,7 @@ def linear(inputArray, scale_min=None, scale_max=None):
 	imageData[indices] = 0.0
 	indices = numpy.where(imageData > 1)
 	imageData[indices] = 1.0
-	
+
 	return imageData
 
 
@@ -145,12 +145,12 @@ def sqrt(inputArray, scale_min=None, scale_max=None):
 	@param scale_max: maximum data value
 	@rtype: numpy array
 	@return: image data array
-	
-	"""		
-    
-	print "img_scale : sqrt"
+
+	"""
+
+	print("img_scale : sqrt")
 	imageData=numpy.array(inputArray, copy=True)
-	
+
 	if scale_min == None:
 		scale_min = imageData.min()
 	if scale_max == None:
@@ -162,7 +162,7 @@ def sqrt(inputArray, scale_min=None, scale_max=None):
 	imageData[indices] = 0.0
 	imageData = numpy.sqrt(imageData)
 	imageData = imageData / math.sqrt(scale_max - scale_min)
-	
+
 	return imageData
 
 
@@ -177,12 +177,12 @@ def log(inputArray, scale_min=None, scale_max=None):
 	@param scale_max: maximum data value
 	@rtype: numpy array
 	@return: image data array
-	
-	"""		
-    
-	print "img_scale : log"
+
+	"""
+
+	print("img_scale : log")
 	imageData=numpy.array(inputArray, copy=True)
-	
+
 	if scale_min == None:
 		scale_min = imageData.min()
 	if scale_max == None:
@@ -195,8 +195,8 @@ def log(inputArray, scale_min=None, scale_max=None):
 	imageData[indices2] = 1.0
 	try :
 		imageData[indices1] = numpy.log10(imageData[indices1])/factor
-	except :
-		print "Error on math.log10 for ", (imageData[i][j] - scale_min)
+	except:
+		print("Error on math.log10 for ", (imageData[i][j] - scale_min))
 
 	return imageData
 
@@ -214,12 +214,12 @@ def asinh(inputArray, scale_min=None, scale_max=None, non_linear=2.0):
 	@param non_linear: non-linearity factor
 	@rtype: numpy array
 	@return: image data array
-	
-	"""		
-    
-	print "img_scale : asinh"
+
+	"""
+
+	print("img_scale : asinh")
 	imageData=numpy.array(inputArray, copy=True)
-	
+
 	if scale_min == None:
 		scale_min = imageData.min()
 	if scale_max == None:

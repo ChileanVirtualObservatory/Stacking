@@ -11,12 +11,12 @@
 # modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -35,15 +35,15 @@ import compare as cm
 
 
 def stack(inputDir,outputDir,E1,E2,E3,E4):
-	print 'Input Directory:', inputDir
-	print 'Output Directory:', outputDir
+	print('Input Directory:', inputDir)
+	print('Output Directory:', outputDir)
 	for the_file in os.listdir(outputDir):
 		file_path = os.path.join(outputDir, the_file)
 		try:
 			if os.path.isfile(file_path):
 				os.unlink(file_path)
-		except Exception, e:
-			print e
+		except (Exception, e) :
+			print(e)
 	if (E1 or E2 or E3 or E4) == None:
 		border = cr.crop(inputDir, outputDir)
 		maxSize = rt.rotate(outputDir, border)
@@ -56,10 +56,9 @@ def stack(inputDir,outputDir,E1,E2,E3,E4):
 
 def aux(inputDir,outputDir):
 	data = glob.glob(inputDir+'/*.fits')
-	print data
-	print "1", data[0].split('/')[-1].split('.')[0]
+	print(data)
+	print("1", data[0].split('/')[-1].split('.')[0])
 	image1 = fits.getdata(data[0])
-	print "2", data[1].split('/')[-1].split('.')[0]
+	print("2", data[1].split('/')[-1].split('.')[0])
 	image2 = fits.getdata(data[1])
 	cm.compare(image1, image2)
-	

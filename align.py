@@ -36,8 +36,8 @@ def align_aux(image,maxSize):
 
 	newdata = np.zeros((maxSize[0],maxSize[1]))
 
-	for i in xrange(0,h): 
-		for j in xrange(0,w):
+	for i in range(0,h): 
+		for j in range(0,w):
 			newdata[i+hdiff, j] = image[i,j]
 
 	return newdata
@@ -47,10 +47,10 @@ def align(outputDir, maxSize):
 	dir_png = outputDir+'/PNG_Images'
 	borders = []
 
-	for i in xrange(0,len(data)):
+	for i in range(0,len(data)):
 		image = fits.getdata(data[i])
 
-		print "Align: "+'/Img_3_'+str(i)+'.fits',
+		print("Align: "+'/Img_3_'+str(i)+'.fits',)
 
 		image = align_aux(image, maxSize)
 		fits.writeto(outputDir+'/Img_4_'+str(i)+'.fits',image, clobber=True)
@@ -65,4 +65,4 @@ def align(outputDir, maxSize):
 		# img.show()
 		
 
-		print "Done."
+		print("Done.")

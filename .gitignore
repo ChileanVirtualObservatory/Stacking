@@ -1,2 +1,6 @@
 Outputs/
 Inputs/
+AllInputs/
+.ipynb_checkpoints/
+
+__pycache__

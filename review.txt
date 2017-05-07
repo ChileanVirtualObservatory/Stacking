@@ -1,0 +1,9 @@
+stack llama a
+    crop:
+        Crea las imagenes 0 antes del crop y 1 después de él.
+    rotate:
+        Crea las imagenes 2.
+
+    scale:
+
+    align:

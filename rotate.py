@@ -65,8 +65,8 @@ def rotate_image(src, theta, fill=0):
 
 def fartestPoints(border):
 	dist = []
-	for i in xrange(0,len(border)):
-		for j in xrange(0,len(border)):
+	for i in range(0,len(border)):
+		for j in range(0,len(border)):
 			y1,x1 = border[i]
 			y2,x2 = border[j]
 			d = (x1-x2)**2 + (y1-y2)**2
@@ -74,7 +74,7 @@ def fartestPoints(border):
 			dist.append((d,border[i],border[j]))
 	maxd = 0
 	points = 0
-	for i in xrange(0,len(dist)):
+	for i in range(0,len(dist)):
 		if dist[i][0] > maxd:
 			points = (dist[i][1],dist[i][2])
 			maxd = dist[i][0]
@@ -82,7 +82,7 @@ def fartestPoints(border):
 	return points
 
 def theta(points):
-	print points
+	print(points)
 	y1,x1 = points[0]
 	y2,x2 = points[1]
 	theta = (y2-y1+.0)/(x2-x1+.0)
@@ -94,12 +94,12 @@ def rotate(outputDir, border):
 	maxWidth = 0
 	data = sorted(glob.glob(outputDir+'/Img_1_*.fits'))
 	dir_png = outputDir+'/PNG_Images' 
-	for i in xrange(0,len(data)):
+	for i in range(0,len(data)):
 		image = fits.getdata(data[i])
 		points = fartestPoints(border[i])
 		image = rotate_image(image,theta(points))
 
-		print "Rotate: "+'/Img_1_'+str(i)+'.fits',
+		print("Rotate: "+'/Img_1_'+str(i)+'.fits',)
 
 		fits.writeto(outputDir+'/Img_2_'+str(i)+'.fits',image, clobber=True)
 
@@ -113,7 +113,7 @@ def rotate(outputDir, border):
 		# img = Image.open(dir_png+'/Img_2_'+str(i)+'.png')
 		# img.show()
 		
-		print "Done."
+		print("Done.")
 
 		h,w = image.shape
 		if h > maxHeight:
@@ -127,11 +127,11 @@ def rotateManual(outputDir):
 
 	data = sorted(glob.glob(outputDir+'/Img_1_*.fits'))
 	# dir_png = outputDir+'/PNG_Images' 
-	for i in xrange(0,len(data)):
+	for i in range(0,len(data)):
 		image = fits.getdata(data[i])
 		image = rotate_image(image,math.atan(theta+(math.pi*9)/2))
 
-		print "Rotate: "+'/Img_1_'+str(i)+'.fits',
+		print("Rotate: "+'/Img_1_'+str(i)+'.fits',)
 
 		fits.writeto(outputDir+'/Img_2_'+str(i)+'.fits',image, clobber=True)
 
@@ -145,4 +145,4 @@ def rotateManual(outputDir):
 		# img = Image.open(dir_png+'/Img_2_'+str(i)+'.png')
 		# img.show()
 		
-		print "Done."
+		print("Done.")

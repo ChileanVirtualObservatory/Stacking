@@ -89,7 +89,7 @@ class GUI(Frame):
 
 
     def checkUncheck(self):
-        print "variable is {0}".format(self.checked.get())
+        print("variable is {0}".format(self.checked.get()))
 
     def hideShow(self,event):
         if self.visible:
@@ -119,7 +119,7 @@ class GUI(Frame):
     def chooseDir(self,entry,inout):
         dirname = tkFileDialog.askdirectory(parent=self,initialdir=".",title='Please select a directory')
         if len(dirname ) > 0:
-            print "You chose %s" % dirname 
+            print("You chose %s" % dirname )
             entry["text"] = dirname
             if inout == 0:
                 self.inputDir = dirname

@@ -57,11 +57,11 @@ def scale(outputDir, maxSize):
     nmw = 0
     dir_png = outputDir+'/PNG_Images' 
 
-    for i in xrange(0,len(data)):
+    for i in range(0,len(data)):
         image = fits.getdata(data[i])
         h,w = image.shape
         
-        print "Scale: "+'/Img_2_'+str(i)+'.fits',
+        print("Scale: "+'/Img_2_'+str(i)+'.fits',)
 
         h,w,image = scale_aux(image,maxSize)
         fits.writeto(outputDir+'/Img_3_'+str(i)+'.fits',image, clobber=True)
@@ -75,7 +75,7 @@ def scale(outputDir, maxSize):
         py.savefig(dir_png+'/Img_3_'+str(i)+'.png')
         # img = Image.open(dir_png+'/Img_3_'+str(i)+'.png')
         # img.show()
-        print "Done."
+        print("Done.")
 
         if h > nmh:
             nmh = h
